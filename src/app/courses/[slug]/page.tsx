@@ -22,10 +22,10 @@ export async function generateMetadata(
 
   return {
     title: course.name,
-    description: course.description.substring(0, 160) + "...",
+    description: course.description ? course.description.substring(0, 160) + "..." : "Curso de El aula de Mayo",
     openGraph: {
       title: `${course.name} | El aula de Mayo`,
-      description: course.description.substring(0, 160) + "...",
+      description: course.description ? course.description.substring(0, 160) + "..." : "Curso de El aula de Mayo",
       images: ['/logo.jpg'],
     },
   };
