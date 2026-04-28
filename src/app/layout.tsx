@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -39,10 +36,6 @@ export const metadata: Metadata = {
     apple: "/logo.jpg",
   },
 };
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 import { Navbar } from "@/components/layout/Navbar";
 
