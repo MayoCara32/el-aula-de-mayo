@@ -48,7 +48,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
       </div>
       
       <p className="text-sm text-foreground/80 italic mb-4 flex-1">
-        "{review.comment}"
+        &quot;{review.comment}&quot;
       </p>
       
       <p className="text-xs text-muted-foreground mt-auto">

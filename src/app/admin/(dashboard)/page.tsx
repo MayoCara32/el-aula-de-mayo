@@ -92,7 +92,7 @@ export default async function AdminDashboard() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-foreground/80 italic mb-4 line-clamp-3">"{review.comment}"</p>
+                  <p className="text-sm text-foreground/80 italic mb-4 line-clamp-3">&quot;{review.comment}&quot;</p>
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-muted-foreground">Hace {formatDistanceToNow(new Date(review.created_at), { locale: es })}</span>
                     <Button size="sm" asChild>

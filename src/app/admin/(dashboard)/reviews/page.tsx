@@ -64,7 +64,7 @@ export default async function AdminReviewsPage({
                     <div className="bg-muted/30 p-4 rounded-lg space-y-3 text-sm">
                       <div>
                         <span className="font-semibold block mb-1">Opinión General:</span>
-                        <p className="italic text-foreground/80">"{review.comment}"</p>
+                        <p className="italic text-foreground/80">&quot;{review.comment}&quot;</p>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-border/50">
                         <div>
