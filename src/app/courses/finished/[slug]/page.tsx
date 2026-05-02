@@ -83,7 +83,8 @@ export default async function FinishedCoursePage({ params }: { params: { slug: s
               <Users className="w-6 h-6" />
               <span className="text-3xl font-bold">{stats.total}</span>
             </div>
-            <p className="text-muted-foreground text-sm mt-1">Alumnos evaluaron este curso</p>
+            <p className="text-muted-foreground text-sm mt-1">Alumnos históricos</p>
+            <p className="text-muted-foreground/70 text-[10px] mt-1">Basado en {(stats as any).reviewCount} opiniones</p>
           </div>
         </div>
 
@@ -101,7 +102,7 @@ export default async function FinishedCoursePage({ params }: { params: { slug: s
       </div>
 
       {/* All Reviews */}
-      <h2 className="text-2xl font-bold tracking-tight mb-6">Historial de Opiniones</h2>
+      <h2 className="text-2xl font-bold tracking-tight mb-6">Opiniones destacadas</h2>
       {reviews.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {reviews.map((review) => (

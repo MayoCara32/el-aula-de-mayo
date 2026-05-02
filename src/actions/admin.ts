@@ -112,13 +112,25 @@ export async function deleteCourse(courseId: string) {
   revalidatePath("/courses");
   return { success: true };
 }
+function slugify(text: string) {
+  return text
+    .toString()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+}
 
 export async function createCourse(data: { name: string; slug: string; date?: string; duration?: string; description?: string; manual_student_count?: number | null }) {
   const { error } = await supabase
     .from("courses")
     .insert([{
       name: data.name,
-      slug: data.slug,
+      slug: slugify(data.slug),
       date: data.date || null,
       duration: data.duration || null,
       description: data.description || null,
@@ -138,7 +150,7 @@ export async function updateCourse(id: string, data: { name: string; slug: strin
     .from("courses")
     .update({
       name: data.name,
-      slug: data.slug,
+      slug: slugify(data.slug),
       date: data.date || null,
       duration: data.duration || null,
       description: data.description || null,

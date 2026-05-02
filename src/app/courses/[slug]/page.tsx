@@ -60,7 +60,7 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
           {course.duration && (
             <div className="flex items-center gap-2">
               <Clock className="w-5 h-5 text-primary" />
-              <span>{course.duration}</span>
+              <span>{course.duration.toLowerCase().includes('hora') ? course.duration : `${course.duration} horas`}</span>
             </div>
           )}
         </div>
@@ -76,9 +76,8 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
               Calificar curso
             </Link>
           </Button>
-          {/* A simple client component could handle the share action */}
           <Button size="lg" variant="outline" className="w-full sm:w-auto" asChild>
-            <Link href={`https://api.whatsapp.com/send?text=Te%20comparto%20este%20curso:%20${course.name}%0Ahttps://elaulademayo.vercel.app/courses/${course.slug}`} target="_blank">
+            <Link href={`https://api.whatsapp.com/send?text=Te%20comparto%20este%20curso:%20${course.name}%0A${process.env.NEXT_PUBLIC_SITE_URL || `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL || 'elaulademayo.vercel.app'}`}/courses/${course.slug}`} target="_blank">
               <Share2 className="w-4 h-4 mr-2" />
               Compartir por WhatsApp
             </Link>
@@ -99,7 +98,8 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
                     <Star key={i} className={`w-4 h-4 ${i < Math.round(stats.average) ? 'fill-current' : 'text-muted'}`} />
                   ))}
                 </div>
-                <span className="text-xs text-muted-foreground">{stats.total} opiniones aprobadas</span>
+                <span className="text-xs text-muted-foreground">{stats.total} alumnos históricos</span>
+                <span className="text-[10px] text-muted-foreground/70">Basado en {(stats as any).reviewCount} opiniones</span>
               </div>
             </div>
 

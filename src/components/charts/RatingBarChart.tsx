@@ -15,6 +15,12 @@ export function RatingBarChart({ distribution }: RatingBarChartProps) {
     { name: "5 ★", value: distribution[5] || 0 },
   ];
 
+  const total = data.reduce((acc, curr) => acc + curr.value, 0);
+
+  if (total === 0) {
+    return <div className="h-[300px] flex items-center justify-center text-muted-foreground">Sin datos suficientes</div>;
+  }
+
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (

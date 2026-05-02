@@ -243,7 +243,7 @@ export function ReviewForm({ course }: { course: Course }) {
         </label>
       </div>
 
-      <Button type="submit" size="lg" className="w-full" disabled={isLoading}>
+      <Button type="submit" size="lg" className="w-full" disabled={isLoading || rating === 0}>
         {isLoading ? "Enviando..." : "Enviar opinión"}
       </Button>
     </form>

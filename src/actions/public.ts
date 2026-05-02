@@ -83,7 +83,7 @@ export async function getCourseStats(courseId: string) {
     .eq("status", "approved");
 
   if (error || !data) {
-    return { average: 0, total: courseData?.manual_student_count || 0, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, recommendRate: { yes: 0, no: 0 } };
+    return { average: 0, total: courseData?.manual_student_count || 0, reviewCount: 0, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, recommendRate: { yes: 0, no: 0 } };
   }
 
   const reviewCount = data.length;
@@ -91,7 +91,7 @@ export async function getCourseStats(courseId: string) {
     ? courseData.manual_student_count 
     : reviewCount;
 
-  if (reviewCount === 0) return { average: 0, total, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, recommendRate: { yes: 0, no: 0 } };
+  if (reviewCount === 0) return { average: 0, total, reviewCount: 0, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, recommendRate: { yes: 0, no: 0 } };
 
   let recommendYes = 0;
   let recommendNo = 0;

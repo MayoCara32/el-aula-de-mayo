@@ -55,11 +55,18 @@ export default async function AdminCoursesPage() {
                         <div className="text-xs text-muted-foreground">{course.duration || "Sin duración"}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          course.is_active ? "bg-green-500/10 text-green-500" : "bg-muted text-muted-foreground"
-                        }`}>
-                          {course.is_active ? "Activo" : "Inactivo"}
-                        </span>
+                        <div className="flex flex-col gap-2 items-start">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            course.is_active ? "bg-green-500/10 text-green-500" : "bg-muted text-muted-foreground"
+                          }`}>
+                            {course.is_active ? "Activo" : "Finalizado"}
+                          </span>
+                          {course.is_active && course.date && new Date(course.date) < new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) && (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-amber-500/10 text-amber-500" title="La fecha de inicio fue hace más de 30 días. Considere finalizarlo.">
+                              Posiblemente concluido
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex justify-end gap-2">

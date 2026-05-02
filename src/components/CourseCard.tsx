@@ -38,7 +38,7 @@ export function CourseCard({ course }: CourseCardProps) {
           {course.duration && (
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              <span>{course.duration}</span>
+              <span>{course.duration.toLowerCase().includes('hora') ? course.duration : `${course.duration} horas`}</span>
             </div>
           )}
         </div>
