@@ -70,7 +70,7 @@ export async function updateReviewStatus(reviewId: string, status: "approved" | 
   
   revalidatePath("/admin/reviews");
   revalidatePath("/admin");
-  revalidatePath("/courses/[slug]");
+  revalidatePath("/courses", "layout"); // BUG-05 fix: invalida toda la sección de cursos
   return { success: true };
 }
 

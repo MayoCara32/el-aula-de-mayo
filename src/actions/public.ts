@@ -116,6 +116,7 @@ export async function getCourseStats(courseId: string) {
   return { 
     average: Number(average), 
     total, 
+    reviewCount,  // BUG-06 fix: exponer el conteo real de reseñas para cálculo de porcentajes
     distribution, 
     recommendRate: { yes: recommendYes, no: recommendNo } 
   };

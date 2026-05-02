@@ -2,6 +2,7 @@ import { getAdminCourses, toggleCourseActive, deleteCourse } from "@/actions/adm
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
+import { parseISO } from "date-fns"; // BUG-11: parseISO evita desfase de zona horaria
 import { es } from "date-fns/locale";
 import Link from "next/link";
 import { PlusCircle, Edit, Trash2, Power, PowerOff } from "lucide-react";
@@ -48,7 +49,8 @@ export default async function AdminCoursesPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="whitespace-nowrap">
-                          {course.date ? format(new Date(course.date), "dd MMM yyyy", { locale: es }) : "N/A"}
+                          {/* BUG-11 fix: parseISO en vez de new Date() para fechas YYYY-MM-DD */}
+                          {course.date ? format(parseISO(course.date), "dd MMM yyyy", { locale: es }) : "N/A"}
                         </div>
                         <div className="text-xs text-muted-foreground">{course.duration || "Sin duración"}</div>
                       </td>

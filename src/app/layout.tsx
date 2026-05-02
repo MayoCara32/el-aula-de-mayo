@@ -16,7 +16,8 @@ export const metadata: Metadata = {
     siteName: "El aula de Mayo",
     images: [
       {
-        url: "/logo.jpg",
+        // BUG-20 fix: URL absoluta para que funcione en redes sociales
+        url: "https://elaulademayo.vercel.app/logo.jpg",
         width: 800,
         height: 600,
         alt: "Logo El aula de Mayo",
@@ -29,7 +30,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "El aula de Mayo",
     description: "Docencia, acompañamiento académico y mejora continua.",
-    images: ["/logo.jpg"],
+    // BUG-20 fix: URL absoluta
+    images: ["https://elaulademayo.vercel.app/logo.jpg"],
   },
   icons: {
     icon: "/logo.jpg",
@@ -38,6 +40,7 @@ export const metadata: Metadata = {
 };
 
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer"; // BUG-16 fix: Footer no estaba importado
 
 import { Toaster } from "sonner";
 
@@ -54,6 +57,8 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
           </main>
+          {/* BUG-16 fix: Footer añadido al layout — antes nunca se renderizaba */}
+          <Footer />
         </div>
         <Toaster theme="dark" position="bottom-right" />
       </body>

@@ -13,12 +13,23 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
-    
-    const formData = new FormData(e.currentTarget);
-    const result = await loginAdmin(formData);
-    
-    if (result?.error) {
-      setError(result.error);
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const result = await loginAdmin(formData);
+
+      if (result?.error) {
+        setError(result.error);
+      }
+      // Si el login es exitoso, loginAdmin() llama a redirect() del lado del servidor
+      // lo que lanza un error especial de Next.js (NEXT_REDIRECT) — es el comportamiento esperado.
+    } catch (err: any) {
+      // El error NEXT_REDIRECT es parte normal del flujo de redirect de Next.js
+      // Solo mostramos error si NO es un redirect
+      if (!err?.message?.includes('NEXT_REDIRECT')) {
+        setError("Error de conexión. Intenta de nuevo.");
+      }
+    } finally {
       setIsLoading(false);
     }
   };

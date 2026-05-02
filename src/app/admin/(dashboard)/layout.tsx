@@ -1,9 +1,9 @@
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import Link from "next/link";
-import { LayoutDashboard, BookOpen, MessageSquare, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { logoutAdmin } from "@/actions/adminAuth";
 import { Button } from "@/components/ui/button";
+import { AdminSidebarNav } from "@/components/admin/AdminSidebarNav";
 
 export default async function DashboardLayout({
   children,
@@ -24,20 +24,8 @@ export default async function DashboardLayout({
           <p className="text-sm text-muted-foreground">El aula de Mayo</p>
         </div>
         
-        <nav className="flex-1 px-4 space-y-2">
-          <Link href="/admin" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-accent text-sm font-medium transition-colors">
-            <LayoutDashboard className="w-4 h-4" />
-            Dashboard
-          </Link>
-          <Link href="/admin/courses" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-accent text-sm font-medium transition-colors">
-            <BookOpen className="w-4 h-4" />
-            Cursos
-          </Link>
-          <Link href="/admin/reviews" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-accent text-sm font-medium transition-colors">
-            <MessageSquare className="w-4 h-4" />
-            Opiniones
-          </Link>
-        </nav>
+        {/* BUG-17 fix: AdminSidebarNav resalta el link activo según la ruta actual */}
+        <AdminSidebarNav />
 
         <div className="p-4 mt-auto border-t border-border/50">
           <form action={logoutAdmin}>

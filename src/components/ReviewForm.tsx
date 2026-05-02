@@ -33,10 +33,10 @@ export function ReviewForm({ course }: { course: Course }) {
   const [visitorId, setVisitorId] = useState<string | null>(null);
 
   useEffect(() => {
-    // Generate or get visitorId
+    // BUG-19 fix: usar crypto.randomUUID() para identificadores más seguros
     let storedId = localStorage.getItem("aula_visitor_id");
     if (!storedId) {
-      storedId = "vis_" + Math.random().toString(36).substring(2, 15);
+      storedId = "vis_" + crypto.randomUUID();
       localStorage.setItem("aula_visitor_id", storedId);
     }
     setVisitorId(storedId);
@@ -44,7 +44,12 @@ export function ReviewForm({ course }: { course: Course }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!visitorId) return;
+    if (!visitorId) {
+      // BUG-07 fix: informar al usuario en vez de fallar silenciosamente
+      toast.error("Error de identificación. Recarga la página e intenta de nuevo.");
+      setError("Error de identificación. Por favor recarga la página.");
+      return;
+    }
     if (rating === 0) {
       toast.error("Por favor, selecciona una calificación.");
       setError("Por favor, selecciona una calificación.");
@@ -107,25 +112,34 @@ export function ReviewForm({ course }: { course: Course }) {
         <div className="flex gap-1" onMouseLeave={() => setHoveredRating(0)}>
           {[1, 2, 3, 4, 5].map((star) => (
             <div key={star} className="relative cursor-pointer">
-              {/* Half star logic could be complex, we'll just use full stars for simplicity in the UI or add a slider for half stars if really needed. The prompt asked to "Permitir medias estrellas, por ejemplo 4.5." So let's implement half stars using a slider or two invisible halves. */}
               <div className="flex">
-                <div 
-                  className="w-4 h-8 z-10" 
+                {/* BUG-08 fix: botones accesibles con ARIA y soporte de teclado */}
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Calificar ${star - 0.5} de 5 estrellas`}
+                  className="w-4 h-8 z-10"
                   onMouseEnter={() => setHoveredRating(star - 0.5)}
                   onClick={() => setRating(star - 0.5)}
+                  onKeyDown={(e) => e.key === 'Enter' && setRating(star - 0.5)}
                 />
-                <div 
-                  className="w-4 h-8 z-10" 
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Calificar ${star} de 5 estrellas`}
+                  className="w-4 h-8 z-10"
                   onMouseEnter={() => setHoveredRating(star)}
                   onClick={() => setRating(star)}
+                  onKeyDown={(e) => e.key === 'Enter' && setRating(star)}
                 />
               </div>
-              <Star 
+              <Star
                 className={cn(
                   "absolute top-0 left-0 w-8 h-8 pointer-events-none transition-colors",
-                  (hoveredRating || rating) >= star ? "fill-yellow-500 text-yellow-500" : 
+                  (hoveredRating || rating) >= star ? "fill-yellow-500 text-yellow-500" :
                   (hoveredRating || rating) >= star - 0.5 ? "fill-yellow-500/50 text-yellow-500" : "text-muted-foreground"
-                )} 
+                )}
+                aria-hidden="true"
               />
             </div>
           ))}

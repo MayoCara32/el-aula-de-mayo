@@ -4,6 +4,7 @@ import { ReviewCard } from "@/components/ReviewCard";
 import { Button } from "@/components/ui/button";
 import { Clock, Calendar, Star, PenLine, Share2 } from "lucide-react";
 import { format } from "date-fns";
+import { parseISO } from "date-fns"; // BUG-11: parseISO evita desfase de zona horaria
 import { es } from "date-fns/locale";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -52,7 +53,8 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
           {course.date && (
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5 text-primary" />
-              <span>{format(new Date(course.date), "dd 'de' MMMM, yyyy", { locale: es })}</span>
+              {/* BUG-11: parseISO evita desfase de un día en zonas horarias negativas */}
+              <span>{format(parseISO(course.date), "dd 'de' MMMM, yyyy", { locale: es })}</span>
             </div>
           )}
           {course.duration && (
@@ -103,8 +105,10 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
 
             <div className="space-y-3">
               {[5, 4, 3, 2, 1].map((rating) => {
+                // BUG-06 fix: usar reviewCount (reseñas reales) no total (alumnos)
                 const count = stats.distribution[rating as keyof typeof stats.distribution] || 0;
-                const percentage = stats.total > 0 ? (count / stats.total) * 100 : 0;
+                const reviewCount = (stats as any).reviewCount ?? 0;
+                const percentage = reviewCount > 0 ? (count / reviewCount) * 100 : 0;
                 return (
                   <div key={rating} className="flex items-center text-sm">
                     <span className="w-3">{rating}</span>

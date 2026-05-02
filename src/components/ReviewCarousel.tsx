@@ -47,7 +47,8 @@ export function ReviewCarousel({ reviews }: ReviewCarouselProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative h-[280px] sm:h-[240px] overflow-hidden">
+      {/* BUG-09 fix: min-h en vez de h fija para que comentarios largos no se corten */}
+      <div className="relative min-h-[220px] overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}

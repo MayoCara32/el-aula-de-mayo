@@ -29,9 +29,10 @@ export async function GET(request: Request) {
         `"${r.courses?.name || ""}"`,
         `"${r.student_name || "Anónimo"}"`,
         r.rating,
-        `"${r.comment.replace(/"/g, '""')}"`,
-        `"${r.liked_most.replace(/"/g, '""')}"`,
-        `"${r.improvement_suggestion.replace(/"/g, '""')}"`,
+        // BUG-12 fix: fallbacks para campos potencialmente null en la BD
+        `"${(r.comment || "").replace(/"/g, '""')}"`,
+        `"${(r.liked_most || "").replace(/"/g, '""')}"`,
+        `"${(r.improvement_suggestion || "").replace(/"/g, '""')}"`,
         r.would_recommend ? "Sí" : "No",
         r.status,
         r.created_at
