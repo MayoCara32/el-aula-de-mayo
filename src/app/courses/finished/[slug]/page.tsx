@@ -1,6 +1,6 @@
 import { getCourseBySlug, getCourseStats, getApprovedReviews } from "@/actions/public";
 import type { Metadata, ResolvingMetadata } from "next";
-import { ReviewCard } from "@/components/ReviewCard";
+import { DetailedReviewCard } from "@/components/DetailedReviewCard";
 import { Archive, ArrowLeft, Star, Users } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -104,9 +104,9 @@ export default async function FinishedCoursePage({ params }: { params: { slug: s
       {/* All Reviews */}
       <h2 className="text-2xl font-bold tracking-tight mb-6">Opiniones destacadas</h2>
       {reviews.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
           {reviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
+            <DetailedReviewCard key={review.id} review={review} />
           ))}
         </div>
       ) : (

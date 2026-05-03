@@ -1,6 +1,6 @@
 import { getCourseBySlug, getCourseStats, getApprovedReviews } from "@/actions/public";
 import type { Metadata, ResolvingMetadata } from "next";
-import { ReviewCard } from "@/components/ReviewCard";
+import { DetailedReviewCard } from "@/components/DetailedReviewCard";
 import { Button } from "@/components/ui/button";
 import { Clock, Calendar, Star, PenLine, Share2 } from "lucide-react";
 import { format } from "date-fns";
@@ -128,12 +128,17 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
         </div>
 
         {/* Reviews List */}
-        <div className="lg:col-span-2 space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Opiniones de alumnos</h3>
+        <div className="lg:col-span-2">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-2xl font-bold">Opiniones de alumnos</h3>
+          </div>
+          
           {reviews.length > 0 ? (
-            reviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+              {reviews.map((review) => (
+                <DetailedReviewCard key={review.id} review={review} />
+              ))}
+            </div>
           ) : (
             <div className="bg-card border border-border/50 rounded-xl p-8 text-center">
               <p className="text-muted-foreground mb-4">Sé el primero en dejar una opinión para este curso.</p>
