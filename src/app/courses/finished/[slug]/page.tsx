@@ -1,6 +1,6 @@
 import { getCourseBySlug, getCourseStats, getApprovedReviews } from "@/actions/public";
 import type { Metadata, ResolvingMetadata } from "next";
-import { DetailedReviewCard } from "@/components/DetailedReviewCard";
+import { DetailedReviewCarousel } from "@/components/DetailedReviewCarousel";
 import { Archive, ArrowLeft, Star, Users } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -104,11 +104,7 @@ export default async function FinishedCoursePage({ params }: { params: { slug: s
       {/* All Reviews */}
       <h2 className="text-2xl font-bold tracking-tight mb-6">Opiniones destacadas</h2>
       {reviews.length > 0 ? (
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
-          {reviews.map((review) => (
-            <DetailedReviewCard key={review.id} review={review} />
-          ))}
-        </div>
+        <DetailedReviewCarousel reviews={reviews} />
       ) : (
         <div className="bg-card border border-border/50 rounded-xl p-8 text-center">
           <p className="text-muted-foreground">No hay opiniones publicadas para este curso.</p>

@@ -1,6 +1,6 @@
 import { getCourseBySlug, getCourseStats, getApprovedReviews } from "@/actions/public";
 import type { Metadata, ResolvingMetadata } from "next";
-import { DetailedReviewCard } from "@/components/DetailedReviewCard";
+import { DetailedReviewCarousel } from "@/components/DetailedReviewCarousel";
 import { Button } from "@/components/ui/button";
 import { Clock, Calendar, Star, PenLine, Share2 } from "lucide-react";
 import { format } from "date-fns";
@@ -134,11 +134,7 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
           </div>
           
           {reviews.length > 0 ? (
-            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
-              {reviews.map((review) => (
-                <DetailedReviewCard key={review.id} review={review} />
-              ))}
-            </div>
+            <DetailedReviewCarousel reviews={reviews} />
           ) : (
             <div className="bg-card border border-border/50 rounded-xl p-8 text-center">
               <p className="text-muted-foreground mb-4">Sé el primero en dejar una opinión para este curso.</p>

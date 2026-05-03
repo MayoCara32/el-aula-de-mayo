@@ -22,7 +22,7 @@ export function DetailedReviewCard({ review }: DetailedReviewCardProps) {
   const hasHalfStar = review.rating % 1 !== 0;
 
   return (
-    <div className="rounded-xl border border-border/50 bg-card p-6 shadow-sm flex flex-col h-full min-w-[320px] max-w-[400px] snap-center">
+    <div className="rounded-xl border border-border/50 bg-card p-6 shadow-sm flex flex-col h-full w-full">
       <div className="flex justify-between items-start mb-4">
         <div>
           <h4 className="font-semibold text-foreground">
